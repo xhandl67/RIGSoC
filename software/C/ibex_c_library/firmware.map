@@ -1,0 +1,165 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ram              0x00100000         0x00000c00
+stack            0x00100c00         0x00000400
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD startup.o
+LOAD uart.o
+LOAD demo_system.o
+LOAD main.o
+                0x00000400                        _min_stack = 0x400
+                0x00000400                        _stack_len = LENGTH (stack)
+                0x00101000                        _stack_start = (ORIGIN (stack) + LENGTH (stack))
+                0x00100080                        _entry_point = (_vectors_start + 0x80)
+                [!provide]                        PROVIDE (_stext = ORIGIN (ram))
+                [!provide]                        PROVIDE (_stack_start = (ORIGIN (stack) + LENGTH (stack)))
+                [!provide]                        PROVIDE (_max_hart_id = 0x0)
+                [!provide]                        PROVIDE (_hart_stack_size = LENGTH (stack))
+                [!provide]                        PROVIDE (_heap_size = 0x0)
+                [!provide]                        PROVIDE (UserSoft = DefaultHandler)
+                [!provide]                        PROVIDE (SupervisorSoft = DefaultHandler)
+                [!provide]                        PROVIDE (MachineSoft = DefaultHandler)
+                [!provide]                        PROVIDE (UserTimer = DefaultHandler)
+                [!provide]                        PROVIDE (SupervisorTimer = DefaultHandler)
+                [!provide]                        PROVIDE (MachineTimer = DefaultHandler)
+                [!provide]                        PROVIDE (UserExternal = DefaultHandler)
+                [!provide]                        PROVIDE (SupervisorExternal = DefaultHandler)
+                [!provide]                        PROVIDE (MachineExternal = DefaultHandler)
+                [!provide]                        PROVIDE (DefaultHandler = DefaultInterruptHandler)
+                [!provide]                        PROVIDE (ExceptionHandler = DefaultExceptionHandler)
+                [!provide]                        PROVIDE (__pre_init = default_pre_init)
+                [!provide]                        PROVIDE (_mp_hook = default_mp_hook)
+                [!provide]                        PROVIDE (_start_trap = default_start_trap)
+                [!provide]                        PROVIDE (_setup_interrupts = default_setup_interrupts)
+                [!provide]                        PROVIDE (InstructionMisaligned = ExceptionHandler)
+                [!provide]                        PROVIDE (InstructionFault = ExceptionHandler)
+                [!provide]                        PROVIDE (IllegalInstruction = ExceptionHandler)
+                [!provide]                        PROVIDE (Breakpoint = ExceptionHandler)
+                [!provide]                        PROVIDE (LoadMisaligned = ExceptionHandler)
+                [!provide]                        PROVIDE (LoadFault = ExceptionHandler)
+                [!provide]                        PROVIDE (StoreMisaligned = ExceptionHandler)
+                [!provide]                        PROVIDE (StoreFault = ExceptionHandler)
+                [!provide]                        PROVIDE (UserEnvCall = ExceptionHandler)
+                [!provide]                        PROVIDE (SupervisorEnvCall = ExceptionHandler)
+                [!provide]                        PROVIDE (MachineEnvCall = ExceptionHandler)
+                [!provide]                        PROVIDE (InstructionPageFault = ExceptionHandler)
+                [!provide]                        PROVIDE (LoadPageFault = ExceptionHandler)
+                [!provide]                        PROVIDE (StorePageFault = ExceptionHandler)
+
+.text           0x00100000      0x498
+                0x00100000                        . = ALIGN (0x4)
+                0x00100000                        _vectors_start = .
+ *(.vectors)
+ .vectors       0x00100000       0x84 startup.o
+                0x00100084                        _vectors_end = .
+ *(.init)
+ *(.init.rust)
+ *(.text)
+ .text          0x00100084       0x84 startup.o
+                0x001000d0                _start
+ .text          0x00100108       0x7e uart.o
+                0x00100108                uart_enable_rx_int
+                0x00100122                uart_in
+                0x00100154                uart_out
+ .text          0x00100186      0x2fc demo_system.o
+                0x00100186                putchar
+                0x001001c2                getchar
+                0x001001dc                puts
+                0x00100214                puthex
+                0x0010027e                sim_halt
+                0x00100296                get_mepc
+                0x001002b0                get_mcause
+                0x001002ca                get_mtval
+                0x001002e4                get_mcycle
+                0x001002fe                reset_mcycle
+                0x00100310                install_exception_handler
+                0x001003ce                enable_interrupts
+                0x001003e8                disable_interrupts
+                0x00100402                set_global_interrupt_enable
+                0x00100428                simple_exc_handler
+ .text          0x00100482       0x16 main.o
+                0x00100482                main
+ *(.text.*)
+                0x00100498                        . = ALIGN (0x4)
+
+.rodata         0x00100498       0x44
+                0x00100498                        . = ALIGN (0x4)
+ *(.srodata)
+ *(.srodata.*)
+ *(.rodata)
+ .rodata        0x00100498       0x44 demo_system.o
+ *(.rodata.*)
+                0x001004dc                        . = ALIGN (0x4)
+
+.rela.dyn       0x001004dc        0x0
+ .rela.text     0x001004dc        0x0 startup.o
+ .rela.sdata    0x001004dc        0x0 startup.o
+
+.data           0x001004dc        0x8
+                0x001004dc                        . = ALIGN (0x4)
+                0x001004dc                        _sidata = LOADADDR (.data)
+                0x001004dc                        _sdata = .
+ *(.sdata)
+ .sdata         0x001004dc        0x4 demo_system.o
+                0x001004dc                exc_vectors
+ .sdata         0x001004e0        0x4 main.o
+                0x001004e0                a
+ *(.sdata.*)
+ *(.data)
+ .data          0x001004e4        0x0 startup.o
+ .data          0x001004e4        0x0 uart.o
+ .data          0x001004e4        0x0 demo_system.o
+ .data          0x001004e4        0x0 main.o
+ *(.data.*)
+                0x001004e4                        . = ALIGN (0x4)
+                0x001004e4                        _edata = .
+
+.bss            0x001004e4        0x0
+                0x001004e4                        . = ALIGN (0x4)
+                0x001004e4                        _bss_start = .
+ *(.sbss)
+ *(.sbss.*)
+ *(.bss)
+ .bss           0x001004e4        0x0 startup.o
+ .bss           0x001004e4        0x0 uart.o
+ .bss           0x001004e4        0x0 demo_system.o
+ .bss           0x001004e4        0x0 main.o
+ *(.bss.*)
+ *(COMMON)
+                0x001004e4                        _bss_end = .
+                0x001004e4                        . = ALIGN (0x4)
+                0x001004e4                        _sbss = _bss_start
+                0x001004e4                        _ebss = _bss_end
+
+.stack          0x00100c00      0x400
+                0x00100c00                        . = ALIGN (0x4)
+                0x00101000                        . = (. + _min_stack)
+ *fill*         0x00100c00      0x400 
+                0x00101000                        . = ALIGN (0x4)
+                0x00101000                        stack = .
+                0x00101000                        _stack = .
+OUTPUT(firmware.elf elf32-littleriscv)
+
+.riscv.attributes
+                0x00000000       0x3a
+ .riscv.attributes
+                0x00000000       0x33 startup.o
+ .riscv.attributes
+                0x00000033       0x36 uart.o
+ .riscv.attributes
+                0x00000069       0x3a demo_system.o
+ .riscv.attributes
+                0x000000a3       0x36 main.o
+
+.comment        0x00000000       0x22
+ .comment       0x00000000       0x22 uart.o
+                                 0x23 (size before relaxing)
+ .comment       0x00000022       0x23 demo_system.o
+ .comment       0x00000022       0x23 main.o

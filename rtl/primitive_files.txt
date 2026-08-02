@@ -1,0 +1,14 @@
+arith_map.v
+brams_init_20.vh
+brams_map.v
+cells_sim.v
+lut_map.v
+lut_tree_map.v
+mux_map.v
+brams.txt
+brams_init_40.vh
+cells_bb.v
+inv_map.v
+lut_tree_cells.genlib
+mul_map.v
+reg_map.v
