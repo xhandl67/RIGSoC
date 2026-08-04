@@ -276,7 +276,7 @@ module ibex_demo_system #(
     //.ICache(1'b1),
     //.ICacheECC(1'b1),
     //.BranchPredictor(1'b1),
-    //.SecureIbex(1'b1),
+    .SecureIbex(1'b1),//dafür haben wir ja den ibex (:
     //.ICacheScramble(1'b1)
     //.DmHaltAddr      ( DEBUG_START + dm::HaltAddress[31:0]     ), Ignorieren wir erstmal
     //.DmExceptionAddr ( DEBUG_START + dm::ExceptionAddress[31:0]) Ignorieren wir auch
