@@ -14,7 +14,7 @@ int UART1::putc(char c){
         while(((*status_reg >> UART_STATUS_TX_FULL) & 1) == 1){
             //warten 
         }
-        *rx_reg = c;
+        *tx_reg = c;
     }
     else{
         return_value = -1;

@@ -2,7 +2,7 @@ TOP = top_gatemate
 #you can deactivate the seed, it is not necessary
 PREFIX := rtl/
 DESIGN_SOURCES := $(addprefix $(PREFIX),$(shell cat build/compile_files.txt))
-IMPLEMENT_FLAGS = -l Logs/routing.log --verbose --device=CCGM1A1 --vopt allow-unconstrained --json Synth/$(TOP)_synth_final.json
+IMPLEMENT_FLAGS = -l Logs/routing.log --verbose --device=CCGM1A1 --seed 1 --vopt allow-unconstrained --json Synth/$(TOP)_synth_final.json
 GATE_MATE_PIN_CONSTRAINTS = constraints/pin_constraints.ccf
 GATE_MATE_TIMING_CONSTRAINTS = constraints/timing_constraints.sdc
 
