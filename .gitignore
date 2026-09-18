@@ -3,4 +3,6 @@
 *.elf
 *.o
 *.json
+ibex_c_library
+ibex_cpp_library
 

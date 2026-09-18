@@ -21,7 +21,9 @@ class UART1{
         void init_regs(void);
         int putc(char c);
         int set_bauddiv(uint16_t bauddiv);
-        int puts(char* s, uint16_t size);
+        int puts(const char* s, uint16_t size);
+        int put_uint8(uint8_t num);
+        //int putnum(uint32_t number);
 };
 
 #endif

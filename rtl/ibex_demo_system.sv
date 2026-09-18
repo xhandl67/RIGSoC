@@ -39,7 +39,7 @@ module ibex_demo_system #(
   input  logic        td_i,     // JTAG test data input pad
   output logic        td_o      // JTAG test data output pad
 );
-  localparam logic [31:0] MEM_SIZE      =  8 * 1024; // davor 128*1024 =128 KiB wir testen 4 * 1024 = 4KiB
+  localparam logic [31:0] MEM_SIZE      =  16 * 1024; // dav or 128*1024 =128 KiB wir testen 4 * 1024 = 4KiB
   localparam logic [31:0] MEM_START     = 32'h00100000;
   localparam logic [31:0] MEM_MASK      = ~(MEM_SIZE-1);
 
@@ -270,13 +270,13 @@ module ibex_demo_system #(
     .RV32M           ( ibex_pkg::RV32MFast                   ), //Davor Schrauben wir mal auf FAst hoch!
     .RV32B           ( ibex_pkg::RV32BFull                    ), //Schrauben wir mal auf Fast hoch
     .DbgTriggerEn    ( 1'b0                            ), //Davor abhängig von bit DBG jetzt einfach 0
-    .DbgHwBreakNum   ( 1'b0                           ),
-    .BranchTargetALU(1'b0)
+    .DbgHwBreakNum   ( 1'b0                           )
+    //.BranchTargetALU(1'b1),
     //.WritebackStage(1'b1),
     //.ICache(1'b1),
     //.ICacheECC(1'b1),
     //.BranchPredictor(1'b1),
-    .SecureIbex(1'b1),//dafür haben wir ja den ibex (:
+    //.SecureIbex(1'b1)
     //.ICacheScramble(1'b1)
     //.DmHaltAddr      ( DEBUG_START + dm::HaltAddress[31:0]     ), Ignorieren wir erstmal
     //.DmExceptionAddr ( DEBUG_START + dm::ExceptionAddress[31:0]) Ignorieren wir auch

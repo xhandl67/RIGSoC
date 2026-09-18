@@ -33,7 +33,7 @@ int UART1::set_bauddiv(uint16_t bauddiv){
     return return_value;
 }
 
-int UART1::puts(char* s, uint16_t size){
+int UART1::puts(const char* s, uint16_t size){
     uint16_t cnt = 0;
     int return_value = 0;
     if(init_status == true){
@@ -48,3 +48,66 @@ int UART1::puts(char* s, uint16_t size){
     }
     return return_value;
 }
+
+int UART1::put_uint8(uint8_t num)
+{
+    int return_value = -1;
+
+    if(init_status == true)
+    {
+        return_value = 0;
+
+        char buffer[3] = {'N', 'N', 'N'};
+        char curr;
+        uint8_t index = 0;
+
+        if(num == 0)
+        {
+            buffer[0] = '0';
+        }
+        else
+        {
+            while(num > 0)
+            {
+                curr = '0' + (num % 10);
+                num = num / 10;
+                buffer[index] = curr;
+                index++;
+            }
+        }
+
+        for(int i = 2; i >= 0; i--)
+        {
+            if(buffer[i] != 'N')
+            {
+                putc(buffer[i]);
+            }
+        }
+    }
+
+    return return_value;
+}
+/*
+int UART1::putnum(uint32_t number){
+    int return_value = 0;
+    char buffer[10];
+    uint8_t cnt = 0;
+    if(init_status == true){
+        while(number > 0){
+            char temp = '0' + (number % 10);
+            buffer[cnt] = temp;
+            cnt++;
+            number = number / 10;
+        }
+        while(cnt > 0){
+            cnt--;
+            putc(buffer[cnt]);
+        }
+        puts("\n\r",2);
+    }
+    else{
+        return_value = -1;
+    }
+    return return_value;
+}
+*/
