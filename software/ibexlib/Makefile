@@ -3,7 +3,7 @@ COMPILER_C = riscv64-unknown-elf-gcc
 OBJCOPYTOOL = riscv64-unknown-elf-objcopy
 FLAGS = -march=rv32imc_zicsr_zifencei -mabi=ilp32 -nostdlib -Wall -Wextra
 #FLAGS = -march=rv32ifdc_zicsr_zifencei -mabi=ilp32d -nostdlib -Wall -Wextra
-LINKER = link_cpp.ld
+LINKER = link_c.ld
 all: firmware.bin
 	python3 bin2svh.py firmware.bin ../../rtl/firmware_mem_init.svh
 

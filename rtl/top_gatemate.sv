@@ -10,8 +10,7 @@ module top_gatemate #(
 ) (
   input         IO_CLK,
   input         IO_RST_N,
-  input  [ 1:0] SW,
-  output [ 1:0] LED,
+  output LED,
   input         UART_RX,
   output        UART_TX
  // input         SPI_RX, benutzen wir garnicht mehr
@@ -31,8 +30,8 @@ module top_gatemate #(
   // Instantiating the Ibex Demo System.
   ibex_demo_system #(
     .ClockFrequency(ClockFrequency),
-    .GpiWidth     ( 2            ), 
-    .GpoWidth     ( 2            ),
+    .GpiWidth     ( 0            ), 
+    .GpoWidth     ( 1           ),
     .BaudRate(115200), //magic 4098
     .SRAMInitFile ( SRAMInitFile )
   ) u_ibex_demo_system (
