@@ -37,7 +37,6 @@ module top_gatemate #(
   ) u_ibex_demo_system (
     .clk_sys_i (clk_sys),
     .rst_sys_ni(rst_sys_n),
-    .gp_i      (SW), 
     .uart_rx_i (UART_RX),
     .gp_o     (LED), 
     .uart_tx_o(UART_TX),

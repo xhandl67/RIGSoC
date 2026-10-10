@@ -44,11 +44,6 @@ prim_secded_inv_hamming_72_64_dec.sv
 prim_secded_inv_hamming_72_64_enc.sv
 prim_secded_inv_hamming_76_68_dec.sv
 prim_secded_inv_hamming_76_68_enc.sv
-prim_xilinx_and2.sv
-prim_xilinx_buf.sv
-prim_xilinx_clock_gating.sv
-prim_xilinx_clock_mux2.sv
-prim_xilinx_flop.sv
 ibex_icache.sv
 timer.sv
 prim_cdc_rand_delay.sv
@@ -145,4 +140,11 @@ ibex_demo_system.sv
 debounce.sv
 gpio.sv
 uart.sv
+dm_csrs.sv
+dm_mem.sv
+dm_sba.sv
+dm_pkg.sv
+dm_top.sv
+dmi_jtag.sv
+dmi_cdc.sv
 top_gatemate.sv
